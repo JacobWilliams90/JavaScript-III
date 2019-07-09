@@ -151,7 +151,8 @@ Humanoid.prototype.greet = function () {
   
   HeroVillan.prototype = Object.create(Humanoid.prototype);
   
-  HeroVillan.prototype.fight1 = function () {
+  HeroVillan.prototype.fight1 = function (target) {
+    target["healthPoints"] = (target["healthPoints"] - 10)
     return `${this.name} lashes out with the ${this.ability} ability.`;
   };
 
@@ -160,6 +161,7 @@ Humanoid.prototype.greet = function () {
     return `${this.name} finishes ` + target.name + ` with ${this.finish}!!!`;
     }
     else {
+    target["healthPoints"] = (target["healthPoints"] - 15)
     return `${this.name} swings his ${this.weapons} at ` + target.name;
   }
   };
@@ -219,10 +221,12 @@ Humanoid.prototype.greet = function () {
   // console.log(hero.fight2(villan))
 
   console.log('Round 1 Fight!')
-  console.log(villan.fight1());
-  console.log(hero.fight1());
+  console.log(villan.fight1(hero));
+  console.log(hero.fight1(villan));
   console.log(hero.fight2(villan));
   console.log(villan.fight2(hero));
+  console.log(hero.fight1(villan));
+  console.log(villan.fight2(hero));
+  console.log(hero.fight2(villan));
   console.log(villan.name + ' is looking hurt. Finish Him!')
-  villan["healthPoints"] = -1;
   console.log(hero.fight2(villan));
