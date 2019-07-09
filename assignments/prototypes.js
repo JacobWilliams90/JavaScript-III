@@ -146,14 +146,23 @@ Humanoid.prototype.greet = function () {
   function HeroVillan(attributes) {
     Humanoid.call(this, attributes);
       this.ability = attributes.ability;
+      this.finish = attributes.finish;
   }
   
   HeroVillan.prototype = Object.create(Humanoid.prototype);
   
-  HeroVillan.prototype.fight = function () {
+  HeroVillan.prototype.fight1 = function () {
     return `${this.name} lashes out with the ${this.ability} ability.`;
   };
 
+  HeroVillan.prototype.fight2 = function (target) {
+    if (target.healthPoints <= 0){
+    return `${this.name} finishes ` + target.name + ` with ${this.finish}!!!`;
+    }
+    else {
+    return `${this.name} swings his ${this.weapons} at ` + target.name;
+  }
+  };
 
   const hero = new HeroVillan({
     createdAt: new Date(),
@@ -166,15 +175,14 @@ Humanoid.prototype.greet = function () {
     name: 'Jin Kazama',
     team: 'Mishima Zaibatsu',
     weapons: [
-      'Fists',
       'Chain',
     ],
     language: [
       'Common',
       'Demonic',
       'Japanese',],
-    ability: 'Lightning Screw Uppercut'
-    
+    ability: 'Lightning Screw Uppercut',
+    finish: 'Mishima Style 10-Hit Combo',
   });
 
   const villan = new HeroVillan({
@@ -194,8 +202,27 @@ Humanoid.prototype.greet = function () {
       'Common',
       'Demonic',
       'Japanese',],
-    ability: 'Spinning Demon'
+    ability: 'Spinning Demon',
+    finishingmove: 'Demonic Laser Beam',
   });
 
-  console.log(villan.fight())
-  console.log(hero.fight())
+  // console.log(villan.fight1());
+  // console.log(hero.fight1());
+  // console.log(hero.fight2(villan));
+  // console.log(villan.fight2(hero));
+
+  // villan["healthPoints"] = -1;
+
+  // console.log(villan.healthPoints);
+  // console.log(villan);
+  
+  // console.log(hero.fight2(villan))
+
+  console.log('Round 1 Fight!')
+  console.log(villan.fight1());
+  console.log(hero.fight1());
+  console.log(hero.fight2(villan));
+  console.log(villan.fight2(hero));
+  console.log(villan.name + ' is looking hurt. Finish Him!')
+  villan["healthPoints"] = -1;
+  console.log(hero.fight2(villan));
