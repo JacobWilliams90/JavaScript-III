@@ -142,3 +142,60 @@ Humanoid.prototype.greet = function () {
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  function HeroVillan(attributes) {
+    Humanoid.call(this, attributes);
+      this.ability = attributes.ability;
+  }
+  
+  HeroVillan.prototype = Object.create(Humanoid.prototype);
+  
+  HeroVillan.prototype.fight = function () {
+    return `${this.name} lashes out with the ${this.ability} ability.`;
+  };
+
+
+  const hero = new HeroVillan({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 2,
+      height: 3,
+    },
+    healthPoints: 50,
+    name: 'Jin Kazama',
+    team: 'Mishima Zaibatsu',
+    weapons: [
+      'Fists',
+      'Chain',
+    ],
+    language: [
+      'Common',
+      'Demonic',
+      'Japanese',],
+    ability: 'Lightning Screw Uppercut'
+    
+  });
+
+  const villan = new HeroVillan({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 50,
+    name: 'Kazuya Mishima',
+    team: 'Mishima Zaibatsu',
+    weapons: [
+      'Fists',
+    ],
+    language: [
+      'Common',
+      'Demonic',
+      'Japanese',],
+    ability: 'Spinning Demon'
+  });
+
+  console.log(villan.fight())
+  console.log(hero.fight())
