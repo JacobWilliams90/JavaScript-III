@@ -127,16 +127,16 @@ Humanoid.prototype.greet = function () {
     language: 'Elvish',
   });
 
-  console.log(mage.createdAt); // Today's date
-  console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-  console.log(swordsman.healthPoints); // 15
-  console.log(mage.name); // Bruce
-  console.log(swordsman.team); // The Round Table
-  console.log(mage.weapons); // Staff of Shamalama
-  console.log(archer.language); // Elvish
-  console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-  console.log(mage.takeDamage()); // Bruce took damage.
-  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  // console.log(mage.createdAt); // Today's date
+  // console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+  // console.log(swordsman.healthPoints); // 15
+  // console.log(mage.name); // Bruce
+  // console.log(swordsman.team); // The Round Table
+  // console.log(mage.weapons); // Staff of Shamalama
+  // console.log(archer.language); // Elvish
+  // console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+  // console.log(mage.takeDamage()); // Bruce took damage.
+  // console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
@@ -212,7 +212,7 @@ Humanoid.prototype.greet = function () {
       'Demonic',
       'Japanese',],
     ability: 'Spinning Demon',
-    finishingmove: 'Demonic Laser Beam',
+    finish: 'Demonic Laser Beam',
   });
 
   // console.log(villan.fight1());
@@ -227,12 +227,24 @@ Humanoid.prototype.greet = function () {
   
   // console.log(hero.fight2(villan))
 
-  console.log('Round 1 Fight!')
+  //HERO WIN EXAMPLE
+  // console.log('Round 1 Fight!')
+  // console.log(villan.fight1(hero));
+  // console.log(hero.fight1(villan));
+  // console.log(hero.fight2(villan));
+  // console.log(villan.fight2(hero));
+  // console.log(hero.fight1(villan));
+  // console.log(villan.fight2(hero));
+  // console.log(hero.fight2(villan));
+  // console.log(hero.fight2(villan));
+
+  //VILLAN WIN EXAMPLE
+  console.log('Round 2 Fight!')
+  console.log(hero.fight1(villan));
   console.log(villan.fight1(hero));
-  console.log(hero.fight1(villan));
-  console.log(hero.fight2(villan));
-  console.log(villan.fight2(hero));
-  console.log(hero.fight1(villan));
   console.log(villan.fight2(hero));
   console.log(hero.fight2(villan));
+  console.log(villan.fight1(hero));
   console.log(hero.fight2(villan));
+  console.log(villan.fight2(hero));
+  console.log(villan.fight2(hero));
