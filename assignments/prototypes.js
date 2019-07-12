@@ -16,12 +16,34 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
+function GameObject(attributes){
+  this.createdAt = attributes.createdAt;
+  this.name = attributes.name;
+  this.dimensions = attributes.dimensions;
+}
+
+GameObject.prototype.destroy = function () {
+  return `${this.name} was removed from the game.`;
+};
+
 /*
   === CharacterStats ===
   * healthPoints
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats(attributes) {
+  GameObject.call(this, attributes);
+  this.healthPoints = attributes.healthPoints;
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype);
+
+CharacterStats.prototype.takeDamage = function () {
+  return `${this.name} took damage`;
+}
+
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -32,7 +54,20 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
- 
+
+function Humanoid(attributes) {
+  CharacterStats.call(this, attributes);
+    this.team = attributes.team;
+    this.weapons = attributes.weapons.toString();
+    this.language = attributes.language;
+}
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+Humanoid.prototype.greet = function () {
+  return `${this.name} offers a greeting in ${this.language}.`;
+};
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -41,7 +76,7 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -92,19 +127,124 @@
     language: 'Elvish',
   });
 
-  console.log(mage.createdAt); // Today's date
-  console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-  console.log(swordsman.healthPoints); // 15
-  console.log(mage.name); // Bruce
-  console.log(swordsman.team); // The Round Table
-  console.log(mage.weapons); // Staff of Shamalama
-  console.log(archer.language); // Elvish
-  console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-  console.log(mage.takeDamage()); // Bruce took damage.
-  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+  // console.log(mage.createdAt); // Today's date
+  // console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+  // console.log(swordsman.healthPoints); // 15
+  // console.log(mage.name); // Bruce
+  // console.log(swordsman.team); // The Round Table
+  // console.log(mage.weapons); // Staff of Shamalama
+  // console.log(archer.language); // Elvish
+  // console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+  // console.log(mage.takeDamage()); // Bruce took damage.
+  // console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  function HeroVillan(attributes) {
+    Humanoid.call(this, attributes);
+      this.ability = attributes.ability;
+      this.finish = attributes.finish;
+  }
+  
+  HeroVillan.prototype = Object.create(Humanoid.prototype);
+  
+  HeroVillan.prototype.fight1 = function (target) {
+    if (target.healthPoints <= 0){
+    console.log(target.name + ' is looking hurt. Finish Him!')
+    return `${this.name} finishes ` + target.name + ` with ${this.finish}!!!`
+    }
+    else {
+    target["healthPoints"] = (target["healthPoints"] - 10)
+    return `${this.name} lashes out with the ${this.ability} ability.`;
+    }
+  };
+
+  HeroVillan.prototype.fight2 = function (target) {
+    if (target.healthPoints <= 0){
+    console.log(target.name + ' is looking hurt. Finish Him!')
+    return `${this.name} finishes ` + target.name + ` with ${this.finish}!!!`;
+    }
+    else {
+    target["healthPoints"] = (target["healthPoints"] - 15)
+    return `${this.name} swings his ${this.weapons} at ` + target.name;
+  }
+  };
+
+  const hero = new HeroVillan({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 2,
+      height: 3,
+    },
+    healthPoints: 50,
+    name: 'Jin Kazama',
+    team: 'Mishima Zaibatsu',
+    weapons: [
+      'Chain',
+    ],
+    language: [
+      'Common',
+      'Demonic',
+      'Japanese',],
+    ability: 'Lightning Screw Uppercut',
+    finish: 'Mishima Style 10-Hit Combo',
+  });
+
+  const villan = new HeroVillan({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 50,
+    name: 'Kazuya Mishima',
+    team: 'Mishima Zaibatsu',
+    weapons: [
+      'Fists',
+    ],
+    language: [
+      'Common',
+      'Demonic',
+      'Japanese',],
+    ability: 'Spinning Demon',
+    finish: 'Demonic Laser Beam',
+  });
+
+  // console.log(villan.fight1());
+  // console.log(hero.fight1());
+  // console.log(hero.fight2(villan));
+  // console.log(villan.fight2(hero));
+
+  // villan["healthPoints"] = -1;
+
+  // console.log(villan.healthPoints);
+  // console.log(villan);
+  
+  // console.log(hero.fight2(villan))
+
+  //HERO WIN EXAMPLE
+  // console.log('Round 1 Fight!')
+  // console.log(villan.fight1(hero));
+  // console.log(hero.fight1(villan));
+  // console.log(hero.fight2(villan));
+  // console.log(villan.fight2(hero));
+  // console.log(hero.fight1(villan));
+  // console.log(villan.fight2(hero));
+  // console.log(hero.fight2(villan));
+  // console.log(hero.fight2(villan));
+
+  //VILLAN WIN EXAMPLE
+  console.log('Round 2 Fight!')
+  console.log(hero.fight1(villan));
+  console.log(villan.fight1(hero));
+  console.log(villan.fight2(hero));
+  console.log(hero.fight2(villan));
+  console.log(villan.fight1(hero));
+  console.log(hero.fight2(villan));
+  console.log(villan.fight2(hero));
+  console.log(villan.fight2(hero));
